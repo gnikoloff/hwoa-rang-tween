@@ -113,7 +113,7 @@ export class Easing {
     return --k * k * ((1.70158 + 1) * k + 1.70158) + 1
   }
   static back_InOut(k: number): number {
-    var s = 1.70158 * 1.525
+    const s = 1.70158 * 1.525
     if ((k *= 2) < 1) return 0.5 * (k * k * ((s + 1) * k - s))
     return 0.5 * ((k -= 2) * k * ((s + 1) * k + s) + 2)
   }
