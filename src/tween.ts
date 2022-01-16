@@ -10,7 +10,6 @@ import { Easing } from './easings'
 
 export class Tween {
   startMS = 0
-  isActive = false
 
   rafID!: number
   durationMS: number
@@ -32,14 +31,14 @@ export class Tween {
 
   start(): this {
     this.startMS = performance.now()
-    this.isActive = true
     this.rafID = requestAnimationFrame(this.update)
     return this
   }
 
-  stop() {
+  stop(): this {
     cancelAnimationFrame(this.rafID)
     this.rafID = -1
+    return this
   }
 
   setEase(easeName: easeType): this {
