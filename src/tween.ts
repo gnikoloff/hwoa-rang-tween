@@ -12,30 +12,43 @@ export class Tween {
   startMS = 0
 
   rafID!: number
+  delayID!: number
   durationMS: number
+  delayMS: number
   easeFunc: easeTweenFunc
   onUpdate: updateTweenFunc
   onComplete: placeholderFunc
 
   constructor({
     durationMS,
-    easeName,
+    delayMS = 0,
+    easeName = 'linear',
     onUpdate,
     onComplete = () => {},
   }: TweenProps) {
     this.durationMS = durationMS
+    this.delayMS = delayMS
     this.easeFunc = Easing[easeName]
     this.onUpdate = onUpdate
     this.onComplete = onComplete
   }
 
   start(): this {
-    this.startMS = performance.now()
-    this.rafID = requestAnimationFrame(this.update)
+    const start = () => {
+      this.startMS = performance.now()
+      this.rafID = requestAnimationFrame(this.update)
+      clearTimeout(this.delayID)
+    }
+    if (this.delayMS) {
+      this.delayID = setTimeout(start, this.delayMS)
+    } else {
+      start()
+    }
     return this
   }
 
   stop(): this {
+    clearTimeout(this.delayID)
     cancelAnimationFrame(this.rafID)
     this.rafID = -1
     return this
