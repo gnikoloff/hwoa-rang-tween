@@ -8,6 +8,7 @@ export type updateTweenFunc = (
 ) => void
 
 export type easeType =
+  | 'linear'
   | 'quad_In'
   | 'quad_Out'
   | 'quad_InOut'
@@ -40,7 +41,17 @@ export type easeType =
   | 'bounce_InOut'
 
 export interface TweenProps {
+  /**
+   * @default 1000
+   */
   durationMS: number
+  /**
+   * @default 0
+   */
+  delayMS?: number
+  /**
+   * @default 'linear'
+   */
   easeName: easeType
   onUpdate: updateTweenFunc
   onComplete?: placeholderFunc
