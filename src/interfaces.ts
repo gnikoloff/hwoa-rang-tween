@@ -52,7 +52,7 @@ export interface TweenProps {
   /**
    * @default 'linear'
    */
-  easeName: easeType
+  easeName?: easeType
   onUpdate: updateTweenFunc
   onComplete?: placeholderFunc
 }
