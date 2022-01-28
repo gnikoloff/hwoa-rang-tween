@@ -36,11 +36,11 @@ export class Tween {
   start(): this {
     const start = () => {
       this.startMS = performance.now()
-      this.rafID = requestAnimationFrame(this.update)
+      this.rafID = window.requestAnimationFrame(this.update)
       clearTimeout(this.delayID)
     }
     if (this.delayMS) {
-      this.delayID = setTimeout(start, this.delayMS)
+      this.delayID = window.setTimeout(start, this.delayMS)
     } else {
       start()
     }
@@ -48,8 +48,8 @@ export class Tween {
   }
 
   stop(): this {
-    clearTimeout(this.delayID)
-    cancelAnimationFrame(this.rafID)
+    window.clearTimeout(this.delayID)
+    window.cancelAnimationFrame(this.rafID)
     this.rafID = -1
     return this
   }
@@ -60,7 +60,7 @@ export class Tween {
   }
 
   update = () => {
-    this.rafID = requestAnimationFrame(this.update)
+    this.rafID = window.requestAnimationFrame(this.update)
 
     let msNorm = (performance.now() - this.startMS) / this.durationMS
     if (msNorm < 0) {
